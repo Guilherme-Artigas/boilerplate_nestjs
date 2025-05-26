@@ -1,28 +1,19 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Length,
-  Matches,
-  IsBoolean,
-} from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsOptional, IsString, Length, Matches, IsBoolean } from 'class-validator';
 
-export class CreateCompanyDto {
-  @ApiProperty({
+export class UpdateCompanyDto {
+  @ApiPropertyOptional({
     description: 'Nome da empresa',
-    example: 'Empresa XYZ',
+    example: 'Empresa XYZ Atualizada',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @Length(3, 255)
-  name: string;
+  name?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Telefone da empresa (formato: (99) 99999-9999)',
     example: '(11) 98765-4321',
-    required: false,
   })
   @IsOptional()
   @IsString()
@@ -31,32 +22,31 @@ export class CreateCompanyDto {
   })
   phone?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Email da empresa',
-    example: 'contato@empresa.com',
+    example: 'novo@empresa.com',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
-  email: string;
+  email?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'CPF/CNPJ da empresa (apenas números)',
     example: '12345678901',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @Length(11, 14)
   @Matches(/^\d{11}$|^\d{14}$/, {
     message: 'O documento deve conter 11 dígitos (CPF) ou 14 dígitos (CNPJ)',
   })
-  document: string;
+  document?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Status de disponibilidade da empresa',
     example: true,
-    default: true,
   })
   @IsOptional()
   @IsBoolean()
-  isAvailable?: boolean = true;
+  isAvailable?: boolean;
 }

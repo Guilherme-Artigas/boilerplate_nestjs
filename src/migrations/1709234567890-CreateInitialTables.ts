@@ -11,6 +11,9 @@ export class CreateInitialTables1709234567890 implements MigrationInterface {
                 \`phone\` varchar(14) NULL,
                 \`email\` varchar(255) NOT NULL,
                 \`document\` varchar(11) NOT NULL,
+                \`isAvailable\` boolean NOT NULL DEFAULT true,
+                \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+                \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
                 UNIQUE INDEX \`IDX_company_email\` (\`email\`),
                 UNIQUE INDEX \`IDX_company_document\` (\`document\`),
                 PRIMARY KEY (\`id\`)

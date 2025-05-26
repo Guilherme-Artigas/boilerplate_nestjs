@@ -25,6 +25,9 @@ export class Company {
   @Column({ unique: true, length: 11, nullable: false })
   document: string;
 
+  @Column({ default: true })
+  isAvailable: boolean;
+
   @OneToMany(() => Products, (product) => product.company)
   products: Products[];
 
