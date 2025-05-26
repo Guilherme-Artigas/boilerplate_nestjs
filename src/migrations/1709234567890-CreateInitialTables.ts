@@ -22,7 +22,11 @@ export class CreateInitialTables1709234567890 implements MigrationInterface {
                 \`id\` varchar(36) NOT NULL,
                 \`name\` varchar(255) NOT NULL DEFAULT 'unkown product',
                 \`description\` varchar(255) NULL,
+                \`value\` decimal(10,2) NOT NULL DEFAULT 0.00,
+                \`isAvailable\` boolean NOT NULL DEFAULT true,
                 \`companyId\` varchar(36) NULL,
+                \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+                \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
                 PRIMARY KEY (\`id\`)
             ) ENGINE=InnoDB
         `);
