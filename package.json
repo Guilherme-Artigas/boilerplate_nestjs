@@ -2,7 +2,7 @@
    "name": "CompanyCRUD",
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
-   "type": "commonjs",
+   "type": "module",
    "devDependencies": {
       "@types/node": "^22.15.21",
       "@typescript-eslint/eslint-plugin": "^7.0.0",

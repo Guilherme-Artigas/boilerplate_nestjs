@@ -16,17 +16,26 @@ import { ProductsModule } from './products/products.module';
       expandVariables: true,
       validationSchema: Joi.object({
         API_URL: Joi.string().uri().default('http://localhost:3000'),
-        DATABASE_URL: Joi.string().uri().required(),
+        DB_HOST: Joi.string().required(),
+        DB_PORT: Joi.number().required(),
+        DB_USERNAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_DATABASE: Joi.string().required(),
       }),
     }),
     HttpModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      url: process.env.DATABASE_URL,
+      host: 'company_db',
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [Company, Products],
-      synchronize: false,
-      migrations: ['src/migrations/*.ts'],
-      migrationsRun: true,
+      synchronize: true,
+      extra: {
+        connectionLimit: 5,
+      },
     }),
     CompanyModule,
     ProductsModule,
@@ -34,4 +43,14 @@ import { ProductsModule } from './products/products.module';
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log('Database Configuration:', {
+      host: 'company_db',
+      port: process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      database: process.env.DB_DATABASE,
+      password: process.env.DB_PASSWORD,
+    });
+  }
+}
