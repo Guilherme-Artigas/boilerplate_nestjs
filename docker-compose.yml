@@ -7,16 +7,18 @@ services:
     container_name: app
     env_file:
       - .env
+    environment:
+      - DATABASE_URL=mysql://root:password@database:3306/company_db
     ports:
       - "3000:3000"
     depends_on:
-      mysql:
+      database:
         condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
 
-  mysql:
+  database:
     image: mysql:8.0
     container_name: company_db
     ports:
@@ -33,7 +35,7 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}" ]
       interval: 5s
       timeout: 5s
       retries: 20
