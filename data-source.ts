@@ -7,7 +7,6 @@ dotenv.config();
 export default new DataSource({
   type: 'mysql',
   url: process.env.DATABASE_URL,
-  entities: [
-  ],
+  entities: [],
   migrations: ['src/migrations/*.ts'],
-}); 
+});
