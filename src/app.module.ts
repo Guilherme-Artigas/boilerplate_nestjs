@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { Company } from './models/company.entity';
 import { Products } from './models/products.entity';
+import { CompanyModule } from './company/company.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { Products } from './models/products.entity';
       migrations: ['src/migrations/*.ts'],
       migrationsRun: true,
     }),
+    CompanyModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [],

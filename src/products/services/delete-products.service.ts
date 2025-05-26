@@ -10,9 +10,10 @@ export class DeleteProductsService {
     private readonly productsRepository: Repository<Products>,
   ) {}
 
-  async execute(id: string): Promise<void> {
+  async execute(id: string): Promise<Products> {
     const product = await this.productsRepository.findOne({
       where: { id },
+      relations: ['company'],
     });
 
     if (!product) {
@@ -20,6 +21,6 @@ export class DeleteProductsService {
     }
 
     product.isAvailable = false;
-    await this.productsRepository.save(product);
+    return this.productsRepository.save(product);
   }
 }
