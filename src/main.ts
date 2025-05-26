@@ -16,8 +16,6 @@ async function bootstrap() {
       `This is a Company CRUD service API built with NestJS, TypeORM, and MySQL.
       `,
     )
-    .addSecurityRequirements('bearer')
-    .addBearerAuth()
     .setVersion('1.0')
     .build();
 

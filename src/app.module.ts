@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
-import Joi = require("joi");
+import { Module } from '@nestjs/common';
+import Joi = require('joi');
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-
-
+import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import { Company } from './models/company.entity';
+import { Products } from './models/products.entity';
 
 @Module({
   imports: [
@@ -21,15 +21,13 @@ import { AppController } from "./app.controller";
     TypeOrmModule.forRoot({
       type: 'mysql',
       url: process.env.DATABASE_URL,
-      entities: [
-      ],
-      synchronize: true,
-
+      entities: [Company, Products],
+      synchronize: false,
+      migrations: ['src/migrations/*.ts'],
+      migrationsRun: true,
     }),
-
   ],
   controllers: [AppController],
-  providers: [
-  ],
+  providers: [],
 })
 export class AppModule {}
