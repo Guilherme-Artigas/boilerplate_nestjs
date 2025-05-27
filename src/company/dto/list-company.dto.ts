@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, Min, IsBoolean } from 'class-validator';
+import { IsNumber, IsOptional, Min, IsBoolean, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ListCompanyDto {
@@ -32,5 +32,5 @@ export class ListCompanyDto {
   @Type(() => Boolean)
   @IsBoolean()
   @IsOptional()
-  isAvailable?: boolean = true;
+  isAvailable?: string;
 }

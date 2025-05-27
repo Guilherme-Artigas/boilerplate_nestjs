@@ -8,6 +8,7 @@ import { ListCompanyService } from '../services/list-company.service';
 import { UpdateCompanyService } from '../services/update-company.service';
 import { DeleteCompanyService } from '../services/delete-company.service';
 import { Company } from '../../models/company.entity';
+import { GetCompanyByIdService } from '../services/get-company-by-id.service';
 
 @ApiTags('Empresas')
 @Controller('companies')
@@ -15,6 +16,7 @@ export class CompanyController {
   constructor(
     private readonly createCompanyService: CreateCompanyService,
     private readonly listCompanyService: ListCompanyService,
+    private readonly getCompanyByIdService: GetCompanyByIdService,
     private readonly updateCompanyService: UpdateCompanyService,
     private readonly deleteCompanyService: DeleteCompanyService,
   ) {}
@@ -33,6 +35,14 @@ export class CompanyController {
   @ApiResponse({ status: 200, description: 'Lista de empresas retornada com sucesso' })
   async findAll(@Query() query: ListCompanyDto): Promise<{ data: Company[]; total: number }> {
     return this.listCompanyService.execute(query);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Buscar empresa por ID' })
+  @ApiResponse({ status: 200, description: 'Empresa encontrada com sucesso', type: Company })
+  @ApiResponse({ status: 404, description: 'Empresa não encontrada' })
+  async findOne(@Param('id') id: string): Promise<Company> {
+    return this.getCompanyByIdService.execute(id);
   }
 
   @Patch(':id')

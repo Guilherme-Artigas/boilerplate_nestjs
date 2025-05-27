@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, Min } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ListProductsDto {
@@ -24,4 +24,13 @@ export class ListProductsDto {
   @Min(1)
   @IsOptional()
   limit?: number = 10;
+
+  @ApiPropertyOptional({
+    description: 'Filtrar por status de disponibilidade',
+    default: true,
+  })
+  @Type(() => Boolean)
+  @IsBoolean()
+  @IsOptional()
+  isAvailable?: string;
 }

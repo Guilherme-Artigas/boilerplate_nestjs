@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Products } from './products.entity';
+import { IsString, Matches } from 'class-validator';
 
 @Entity()
 export class Company {
@@ -16,7 +17,9 @@ export class Company {
   @Column({ length: 255, nullable: false })
   name: string;
 
-  @Column({ length: 14, nullable: true })
+  @Column({ length: 11, nullable: true })
+  @IsString()
+  @Matches(/^[0-9]{11}$/, { message: 'Phone must contain exactly 11 digits' })
   phone: string;
 
   @Column({ unique: true, nullable: false })

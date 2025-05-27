@@ -12,13 +12,13 @@ export class UpdateCompanyDto {
   name?: string;
 
   @ApiPropertyOptional({
-    description: 'Telefone da empresa (formato: (99) 99999-9999)',
-    example: '(11) 98765-4321',
+    description: 'Telefone da empresa (apenas números)',
+    example: '11987654321',
   })
   @IsOptional()
   @IsString()
-  @Matches(/^\(\d{2}\) \d{5}-\d{4}$/, {
-    message: 'O telefone deve estar no formato (99) 99999-9999',
+  @Matches(/^[0-9]{11}$/, {
+    message: 'O telefone deve conter exatamente 11 dígitos numéricos',
   })
   phone?: string;
 

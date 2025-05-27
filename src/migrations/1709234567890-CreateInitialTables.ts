@@ -8,7 +8,7 @@ export class CreateInitialTables1709234567890 implements MigrationInterface {
             CREATE TABLE \`company\` (
                 \`id\` varchar(36) NOT NULL,
                 \`name\` varchar(255) NOT NULL,
-                \`phone\` varchar(14) NULL,
+                \`phone\` varchar(11) NULL,
                 \`email\` varchar(255) NOT NULL,
                 \`document\` varchar(11) NOT NULL,
                 \`isAvailable\` boolean NOT NULL DEFAULT true,

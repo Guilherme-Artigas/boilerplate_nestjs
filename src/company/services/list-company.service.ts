@@ -12,15 +12,18 @@ export class ListCompanyService {
   ) {}
 
   async execute(query: ListCompanyDto): Promise<{ data: Company[]; total: number }> {
-    const { page = 1, limit = 10, isAvailable = true } = query;
+    const { page = 1, limit = 10, isAvailable } = query;
+
+    const where: any = {};
+    if (isAvailable !== undefined) {
+      where.isAvailable = isAvailable === 'true' ? true : false;
+    }
 
     const [data, total] = await this.companyRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
       relations: ['products'],
-      where: {
-        isAvailable,
-      },
+      where,
       order: {
         createdAt: 'DESC',
       },
