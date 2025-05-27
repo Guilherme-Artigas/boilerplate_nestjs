@@ -7,6 +7,7 @@ import { CreateProductService } from './services/create-product.service';
 import { ListProductsService } from './services/list-products.service';
 import { UpdateProductService } from './services/update-product.service';
 import { DeleteProductsService } from './services/delete-products.service';
+import { GetProductByIdService } from './services/get-product-by-id.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Products, Company])],
@@ -16,6 +17,7 @@ import { DeleteProductsService } from './services/delete-products.service';
     ListProductsService,
     UpdateProductService,
     DeleteProductsService,
+    GetProductByIdService,
   ],
 })
 export class ProductsModule {}

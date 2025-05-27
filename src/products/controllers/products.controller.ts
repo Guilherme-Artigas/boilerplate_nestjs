@@ -7,6 +7,7 @@ import { CreateProductService } from '../services/create-product.service';
 import { ListProductsService } from '../services/list-products.service';
 import { UpdateProductService } from '../services/update-product.service';
 import { DeleteProductsService } from '../services/delete-products.service';
+import { GetProductByIdService } from '../services/get-product-by-id.service';
 import { Products } from '../../models/products.entity';
 
 @ApiTags('Produtos')
@@ -17,6 +18,7 @@ export class ProductsController {
     private readonly listProductsService: ListProductsService,
     private readonly updateProductService: UpdateProductService,
     private readonly deleteProductService: DeleteProductsService,
+    private readonly getProductByIdService: GetProductByIdService,
   ) {}
 
   @Post()
@@ -33,6 +35,14 @@ export class ProductsController {
   @ApiResponse({ status: 200, description: 'Lista de produtos retornada com sucesso' })
   async findAll(@Query() query: ListProductsDto): Promise<{ data: Products[]; total: number }> {
     return this.listProductsService.execute(query);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Buscar produto por ID' })
+  @ApiResponse({ status: 200, description: 'Produto encontrado com sucesso', type: Products })
+  @ApiResponse({ status: 404, description: 'Produto não encontrado' })
+  async findOne(@Param('id') id: string): Promise<Products> {
+    return this.getProductByIdService.execute(id);
   }
 
   @Patch(':id')

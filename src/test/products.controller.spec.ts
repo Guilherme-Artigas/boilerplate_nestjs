@@ -4,6 +4,7 @@ import { CreateProductService } from '../products/services/create-product.servic
 import { ListProductsService } from '../products/services/list-products.service';
 import { UpdateProductService } from '../products/services/update-product.service';
 import { DeleteProductsService } from '../products/services/delete-products.service';
+import { GetProductByIdService } from '../products/services/get-product-by-id.service';
 import { Products } from '../models/products.entity';
 import { CreateProductDto } from '../products/dto/create-product.dto';
 import { UpdateProductDto } from '../products/dto/update-product.dto';
@@ -56,6 +57,10 @@ describe('ProductsController', () => {
     execute: jest.fn().mockResolvedValue(mockProduct),
   };
 
+  const mockGetProductByIdService = {
+    execute: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductsController],
@@ -64,6 +69,7 @@ describe('ProductsController', () => {
         { provide: ListProductsService, useValue: mockListProductsService },
         { provide: UpdateProductService, useValue: mockUpdateProductService },
         { provide: DeleteProductsService, useValue: mockDeleteProductService },
+        { provide: GetProductByIdService, useValue: mockGetProductByIdService },
       ],
     }).compile();
 
@@ -126,6 +132,25 @@ describe('ProductsController', () => {
 
       expect(deleteProductService.execute).toHaveBeenCalledWith('1');
       expect(result).toEqual(mockProduct);
+    });
+  });
+
+  describe('findOne', () => {
+    it('should return a product by id', async () => {
+      const mockProduct = {
+        id: '1',
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 100,
+        company: mockCompany,
+      };
+
+      mockGetProductByIdService.execute.mockResolvedValue(mockProduct);
+
+      const result = await controller.findOne('1');
+
+      expect(result).toEqual(mockProduct);
+      expect(mockGetProductByIdService.execute).toHaveBeenCalledWith('1');
     });
   });
 });
