@@ -195,10 +195,3 @@ A documentação completa da API está disponível em:
 ```
 http://localhost:3000/docs
 ```
-
-## Testes
-
-Para executar os testes:
-```bash
-npm run test
-```
