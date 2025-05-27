@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductsController } from './products.controller';
-import { CreateProductService } from '../services/create-product.service';
-import { ListProductsService } from '../services/list-products.service';
-import { UpdateProductService } from '../services/update-product.service';
-import { DeleteProductsService } from '../services/delete-products.service';
-import { Products } from '../../models/products.entity';
-import { CreateProductDto } from '../dto/create-product.dto';
-import { UpdateProductDto } from '../dto/update-product.dto';
-import { ListProductsDto } from '../dto/list-products.dto';
-import { Company } from '../../models/company.entity';
+import { ProductsController } from '../products/controllers/products.controller';
+import { CreateProductService } from '../products/services/create-product.service';
+import { ListProductsService } from '../products/services/list-products.service';
+import { UpdateProductService } from '../products/services/update-product.service';
+import { DeleteProductsService } from '../products/services/delete-products.service';
+import { Products } from '../models/products.entity';
+import { CreateProductDto } from '../products/dto/create-product.dto';
+import { UpdateProductDto } from '../products/dto/update-product.dto';
+import { ListProductsDto } from '../products/dto/list-products.dto';
+import { Company } from '../models/company.entity';
 
 describe('ProductsController', () => {
   let controller: ProductsController;

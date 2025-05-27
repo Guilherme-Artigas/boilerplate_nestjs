@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CompanyController } from './company.controller';
-import { CreateCompanyService } from '../services/create-company.service';
-import { ListCompanyService } from '../services/list-company.service';
-import { GetCompanyByIdService } from '../services/get-company-by-id.service';
-import { UpdateCompanyService } from '../services/update-company.service';
-import { DeleteCompanyService } from '../services/delete-company.service';
-import { Company } from '../../models/company.entity';
-import { CreateCompanyDto } from '../dto/create-company.dto';
-import { UpdateCompanyDto } from '../dto/update-company.dto';
-import { ListCompanyDto } from '../dto/list-company.dto';
+import { CompanyController } from '../company/controllers/company.controller';
+import { CreateCompanyService } from '../company/services/create-company.service';
+import { ListCompanyService } from '../company/services/list-company.service';
+import { GetCompanyByIdService } from '../company/services/get-company-by-id.service';
+import { UpdateCompanyService } from '../company/services/update-company.service';
+import { DeleteCompanyService } from '../company/services/delete-company.service';
+import { Company } from '../models/company.entity';
+import { CreateCompanyDto } from '../company/dto/create-company.dto';
+import { UpdateCompanyDto } from '../company/dto/update-company.dto';
+import { ListCompanyDto } from '../company/dto/list-company.dto';
 
 describe('CompanyController', () => {
   let controller: CompanyController;
