@@ -26,7 +26,10 @@ export class CreateProductService {
       throw new NotFoundException('Empresa não encontrada ou está desativada');
     }
 
-    const product = this.productsRepository.create(createProductDto);
+    const product = this.productsRepository.create({
+      ...createProductDto,
+      company: company,
+    });
     return await this.productsRepository.save(product);
   }
 }
