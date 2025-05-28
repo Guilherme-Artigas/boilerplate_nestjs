@@ -18,10 +18,10 @@ export class CreateCompanyService {
 
     if (existingCompany) {
       if (existingCompany.email === createCompanyDto.email) {
-        throw new ConflictException('Email já cadastrado');
+        throw new ConflictException('Email already registered');
       }
       if (existingCompany.document === createCompanyDto.document) {
-        throw new ConflictException('Documento já cadastrado');
+        throw new ConflictException('Document already registered');
       }
     }
 

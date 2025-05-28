@@ -17,12 +17,12 @@ export class DeleteCompanyService {
     });
 
     if (!company) {
-      throw new NotFoundException(`Empresa com ID ${id} não encontrada`);
+      throw new NotFoundException(`Company with ID ${id} not found`);
     }
 
     // Verifica se a empresa tem produtos
     if (company.products && company.products.length > 0) {
-      throw new Error('Não é possível desativar uma empresa que possui produtos');
+      throw new Error('You cannot deactivate a company that has products');
     }
 
     // Desativa a empresa ao invés de excluí-la

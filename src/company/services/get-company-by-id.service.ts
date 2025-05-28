@@ -14,7 +14,7 @@ export class GetCompanyByIdService {
     const company = await this.companyRepository.findOne({ where: { id } });
 
     if (!company) {
-      throw new NotFoundException('Empresa não encontrada');
+      throw new NotFoundException('Company not found');
     }
 
     return company;

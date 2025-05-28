@@ -84,7 +84,7 @@ describe('CompanyController', () => {
       const createCompanyDto: CreateCompanyDto = {
         name: 'Test Company',
         email: 'test@company.com',
-        document: '529.982.247-25', // CPF válido
+        document: '529.982.247-25', // valid CPF
         phone: '11987654321',
       };
 
@@ -106,7 +106,7 @@ describe('CompanyController', () => {
         BadRequestException,
       );
       expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
-        'CPF inválido',
+        'Invalid CPF',
       );
     });
 
@@ -122,7 +122,7 @@ describe('CompanyController', () => {
         BadRequestException,
       );
       expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
-        'CNPJ inválido',
+        'Invalid CNPJ',
       );
     });
   });
@@ -173,7 +173,7 @@ describe('CompanyController', () => {
         BadRequestException,
       );
       expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
-        'CPF inválido',
+        'Invalid CPF',
       );
     });
 
@@ -187,7 +187,7 @@ describe('CompanyController', () => {
         BadRequestException,
       );
       expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
-        'CNPJ inválido',
+        'Invalid CNPJ',
       );
     });
   });

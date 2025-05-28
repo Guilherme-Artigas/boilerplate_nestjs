@@ -23,7 +23,7 @@ export class CreateProductService {
     });
 
     if (!company) {
-      throw new NotFoundException('Empresa não encontrada ou está desativada');
+      throw new NotFoundException('Company not found or not available');
     }
 
     const product = this.productsRepository.create({

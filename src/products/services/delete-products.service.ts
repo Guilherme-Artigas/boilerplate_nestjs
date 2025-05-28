@@ -17,7 +17,7 @@ export class DeleteProductsService {
     });
 
     if (!product) {
-      throw new NotFoundException(`Produto com ID ${id} não encontrado`);
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
 
     product.isAvailable = false;

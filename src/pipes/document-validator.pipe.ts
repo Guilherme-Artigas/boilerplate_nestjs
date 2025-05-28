@@ -8,14 +8,14 @@ export class DocumentValidatorPipe implements PipeTransform {
 
     if (cleanDocument.length === 11) {
       if (!cpf.isValid(cleanDocument)) {
-        throw new BadRequestException('CPF inválido');
+        throw new BadRequestException('Invalid CPF');
       }
     } else if (cleanDocument.length === 14) {
       if (!cnpj.isValid(cleanDocument)) {
-        throw new BadRequestException('CNPJ inválido');
+        throw new BadRequestException('Invalid CNPJ');
       }
     } else {
-      throw new BadRequestException('Documento deve ter 11 dígitos (CPF) ou 14 dígitos (CNPJ)');
+      throw new BadRequestException('Document must have 11 digits (CPF) or 14 digits (CNPJ)');
     }
 
     return cleanDocument;

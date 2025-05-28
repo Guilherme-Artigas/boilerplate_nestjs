@@ -18,7 +18,7 @@ export class UpdateProductService {
     });
 
     if (!product) {
-      throw new NotFoundException(`Produto com ID ${id} não encontrado`);
+      throw new NotFoundException(`Produto with ID ${id} not found`);
     }
 
     // Atualiza apenas os campos fornecidos

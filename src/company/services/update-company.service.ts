@@ -18,7 +18,7 @@ export class UpdateCompanyService {
     });
 
     if (!company) {
-      throw new NotFoundException(`Empresa com ID ${id} não encontrada`);
+      throw new NotFoundException(`Company with ID ${id} not found`);
     }
 
     // Verifica se o novo email ou documento já existe em outra empresa
@@ -29,10 +29,10 @@ export class UpdateCompanyService {
 
       if (existingCompany && existingCompany.id !== id) {
         if (existingCompany.email === updateCompanyDto.email) {
-          throw new ConflictException('Email já cadastrado em outra empresa');
+          throw new ConflictException('Email already registered');
         }
         if (existingCompany.document === updateCompanyDto.document) {
-          throw new ConflictException('Documento já cadastrado em outra empresa');
+          throw new ConflictException('Document already registered in another company');
         }
       }
     }
