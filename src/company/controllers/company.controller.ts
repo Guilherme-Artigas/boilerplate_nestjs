@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCompanyDto } from '../dto/create-company.dto';
 import { UpdateCompanyDto } from '../dto/update-company.dto';
@@ -9,6 +9,7 @@ import { UpdateCompanyService } from '../services/update-company.service';
 import { DeleteCompanyService } from '../services/delete-company.service';
 import { Company } from '../../models/company.entity';
 import { GetCompanyByIdService } from '../services/get-company-by-id.service';
+import { DocumentValidatorPipe } from '../../pipes/document-validator.pipe';
 
 @ApiTags('Empresas')
 @Controller('companies')
@@ -26,6 +27,7 @@ export class CompanyController {
   @ApiResponse({ status: 201, description: 'Empresa criada com sucesso', type: Company })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 409, description: 'Email ou documento já cadastrado' })
+  @UsePipes(new DocumentValidatorPipe())
   async create(@Body() createCompanyDto: CreateCompanyDto): Promise<Company> {
     return this.createCompanyService.execute(createCompanyDto);
   }
@@ -50,6 +52,7 @@ export class CompanyController {
   @ApiResponse({ status: 200, description: 'Empresa atualizada com sucesso', type: Company })
   @ApiResponse({ status: 404, description: 'Empresa não encontrada' })
   @ApiResponse({ status: 409, description: 'Email ou documento já cadastrado' })
+  @UsePipes(new DocumentValidatorPipe())
   async update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,

@@ -9,6 +9,8 @@ import { Company } from '../models/company.entity';
 import { CreateCompanyDto } from '../company/dto/create-company.dto';
 import { UpdateCompanyDto } from '../company/dto/update-company.dto';
 import { ListCompanyDto } from '../company/dto/list-company.dto';
+import { BadRequestException } from '@nestjs/common';
+import { DocumentValidatorPipe } from '../pipes/document-validator.pipe';
 
 describe('CompanyController', () => {
   let controller: CompanyController;
@@ -17,6 +19,7 @@ describe('CompanyController', () => {
   let getCompanyByIdService: GetCompanyByIdService;
   let updateCompanyService: UpdateCompanyService;
   let deleteCompanyService: DeleteCompanyService;
+  let documentValidatorPipe: DocumentValidatorPipe;
 
   const mockCompany: Company = {
     id: '1',
@@ -59,6 +62,7 @@ describe('CompanyController', () => {
         { provide: GetCompanyByIdService, useValue: mockGetCompanyByIdService },
         { provide: UpdateCompanyService, useValue: mockUpdateCompanyService },
         { provide: DeleteCompanyService, useValue: mockDeleteCompanyService },
+        DocumentValidatorPipe,
       ],
     }).compile();
 
@@ -68,6 +72,7 @@ describe('CompanyController', () => {
     getCompanyByIdService = module.get<GetCompanyByIdService>(GetCompanyByIdService);
     updateCompanyService = module.get<UpdateCompanyService>(UpdateCompanyService);
     deleteCompanyService = module.get<DeleteCompanyService>(DeleteCompanyService);
+    documentValidatorPipe = module.get<DocumentValidatorPipe>(DocumentValidatorPipe);
   });
 
   it('should be defined', () => {
@@ -78,15 +83,47 @@ describe('CompanyController', () => {
     it('should create a new company', async () => {
       const createCompanyDto: CreateCompanyDto = {
         name: 'Test Company',
-        document: '12345678901234',
         email: 'test@company.com',
-        phone: '1234567890',
+        document: '529.982.247-25', // CPF válido
+        phone: '11987654321',
       };
 
       const result = await controller.create(createCompanyDto);
 
       expect(createCompanyService.execute).toHaveBeenCalledWith(createCompanyDto);
       expect(result).toEqual(mockCompany);
+    });
+
+    it('should throw BadRequestException when creating with invalid CPF', () => {
+      const createCompanyDto: CreateCompanyDto = {
+        name: 'Test Company',
+        email: 'test@company.com',
+        document: '123.456.789-00', // invalid CPF
+        phone: '11987654321',
+      };
+
+      expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
+        BadRequestException,
+      );
+      expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
+        'CPF inválido',
+      );
+    });
+
+    it('should throw BadRequestException when creating with invalid CNPJ', () => {
+      const createCompanyDto: CreateCompanyDto = {
+        name: 'Test Company',
+        email: 'test@company.com',
+        document: '12.345.678/0001-90', // invalid CNPJ
+        phone: '11987654321',
+      };
+
+      expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
+        BadRequestException,
+      );
+      expect(() => documentValidatorPipe.transform(createCompanyDto.document)).toThrow(
+        'CNPJ inválido',
+      );
     });
   });
 
@@ -117,12 +154,41 @@ describe('CompanyController', () => {
     it('should update a company', async () => {
       const updateCompanyDto: UpdateCompanyDto = {
         name: 'Updated Company',
+        document: '33.014.556/0001-96', // valid CPF
       };
 
       const result = await controller.update('1', updateCompanyDto);
 
       expect(updateCompanyService.execute).toHaveBeenCalledWith('1', updateCompanyDto);
       expect(result).toEqual(mockCompany);
+    });
+
+    it('should throw BadRequestException when updating with invalid CPF', () => {
+      const updateCompanyDto: UpdateCompanyDto = {
+        name: 'Updated Company',
+        document: '111.111.111-11', // invalid CPF
+      };
+
+      expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
+        BadRequestException,
+      );
+      expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
+        'CPF inválido',
+      );
+    });
+
+    it('should throw BadRequestException when updating with invalid CNPJ', () => {
+      const updateCompanyDto: UpdateCompanyDto = {
+        name: 'Updated Company',
+        document: '11.111.111/1111-11', // invalid CNPJ
+      };
+
+      expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
+        BadRequestException,
+      );
+      expect(() => documentValidatorPipe.transform(updateCompanyDto.document)).toThrow(
+        'CNPJ inválido',
+      );
     });
   });
 
