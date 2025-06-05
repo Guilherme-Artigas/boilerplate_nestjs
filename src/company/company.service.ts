@@ -34,13 +34,24 @@ export class CompanyService {
   async update(id: number, data: { name?: string; cnpj?: string }) {
     const company = await prisma.company.findUnique({
       where: {
-        cnpj: data.cnpj,
+        id,
       },
     });
 
     if (!company) {
       throw new Error('Empresa não encontrada');
     }
+
+    const findCompanyByCnpj = await prisma.company.findUnique({
+      where: {
+        cnpj: data.cnpj,
+      },
+    });
+
+    if (findCompanyByCnpj) {
+      throw new Error('Empresa já existente');
+    }
+
     try {
       return await prisma.company.update({ where: { id }, data });
     } catch (err) {
