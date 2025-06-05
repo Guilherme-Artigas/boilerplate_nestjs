@@ -22,7 +22,7 @@ export class ProductController {
     try {
       return await this.productService.create(product);
     } catch (error) {
-      throw new Error('Erro ao criar produto');
+      throw new InternalServerErrorException('Erro ao criar produto');
     }
   }
 
@@ -31,7 +31,7 @@ export class ProductController {
     try {
       return await this.productService.findAll();
     } catch (error) {
-      throw new Error('Erro ao buscar produtos');
+      throw new InternalServerErrorException('Erro ao buscar produtos');
     }
   }
 
@@ -40,10 +40,8 @@ export class ProductController {
     try {
       return await this.productService.findOne(+id);
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === 'Produto não encontrado') {
-          throw new NotFoundException(error.message);
-        }
+      if (error instanceof NotFoundException) {
+        throw error;
       }
       throw new InternalServerErrorException('Erro ao buscar produto');
     }
@@ -62,10 +60,8 @@ export class ProductController {
     try {
       return await this.productService.update(+id, product);
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === 'Produto não encontrado') {
-          throw new NotFoundException(error.message);
-        }
+      if (error instanceof NotFoundException) {
+        throw error;
       }
       throw new InternalServerErrorException('Erro ao atualizar produto');
     }
@@ -76,10 +72,8 @@ export class ProductController {
     try {
       return await this.productService.remove(+id);
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === 'Produto não encontrado') {
-          throw new NotFoundException(error.message);
-        }
+      if (error instanceof NotFoundException) {
+        throw error;
       }
       throw new InternalServerErrorException('Erro ao remover produto');
     }
