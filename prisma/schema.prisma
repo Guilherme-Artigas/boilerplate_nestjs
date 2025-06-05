@@ -6,3 +6,18 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Company {
+  id       Int       @id @default(autoincrement())
+  name     String
+  cnpj     String     @unique
+  products Product[]
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Float
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
+}
