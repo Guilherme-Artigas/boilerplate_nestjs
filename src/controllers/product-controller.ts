@@ -40,9 +40,13 @@ export const productController = {
 			const product = await productService.createProduct(data);
 			return res.status(201).json(product);
 		} catch (error: any) {
-			console.error("Error creating product:", error);
-			return res.status(500).json({ message: "Internal server error." });
-		}
+      if (error.code === 'P2002') {
+        console.error('Product name already exists for this company.');
+        throw new Error('This company already has a product with this name.');
+      }
+      console.error('Error creating product:', error);
+      throw new Error('Error creating product.');
+    }
 	},
 
 	// DELETE /product/:id
@@ -91,7 +95,11 @@ export const productController = {
 				return res.status(404).json({ message: "Product not found." });
 			}
 			return res.status(200).json(updatedProduct);
-		} catch (error) {
+		} catch (error: any) {
+      if (error.code === 'P2002') {
+        console.error('Product name already exists for this company.');
+        throw new Error('This company already has a product with this name.');
+      }
 			console.error("Error updating product:", error);
 			return res.status(500).json({ message: "Internal server error." });
 		}
