@@ -74,6 +74,9 @@ export const companyService = {
       skip,
       take,
       orderBy: { name: 'asc' },
+      include: {
+        products: true
+      }
     });
   },
 

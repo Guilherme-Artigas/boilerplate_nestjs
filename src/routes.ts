@@ -10,6 +10,7 @@ router.post('/companies/create', companyController.create)
 router.put('/companies/:id', companyController.update)
 router.delete('/companies/:id', companyController.delete)
 
+router.get('/products', productController.listAll)
 router.get('/products/:id', productController.showOne)
 router.post('/products/create', productController.create)
 router.put('/products/:id', productController.update)

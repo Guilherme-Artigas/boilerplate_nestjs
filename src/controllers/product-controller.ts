@@ -96,4 +96,27 @@ export const productController = {
 			return res.status(500).json({ message: "Internal server error." });
 		}
 	},
+
+	// GET /products?page=0&limit=0
+	listAll: async (req: Request, res: Response) => {
+		const page = parseInt(req.query.page as string) || 1;
+		const limit = parseInt(req.query.limit as string) || 10;
+
+		const skip = (page - 1) * limit;
+
+		try {
+			const [products, total] = await Promise.all([productService.listPaginated(skip, limit), productService.countAll()]);
+
+			return res.status(200).json({
+				data: products,
+				page,
+				limit,
+				total,
+				totalPages: Math.ceil(total / limit),
+			});
+		} catch (error) {
+			console.error("Error listing products:", error);
+			return res.status(500).json({ message: "Internal server error." });
+		}
+	},
 };

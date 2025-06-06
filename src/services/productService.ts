@@ -62,5 +62,20 @@ export const productService = {
       console.error("Error updating product.", error)
       throw error
     }
+  },
+
+  listPaginated: async (skip: number, take: number) => {
+    return await prisma.product.findMany({
+      skip,
+      take,
+      orderBy: { name: 'asc' },
+      include: {
+        company: true
+      }
+    });
+  },
+
+  countAll: async () => {
+    return await prisma.product.count();
   }
 }

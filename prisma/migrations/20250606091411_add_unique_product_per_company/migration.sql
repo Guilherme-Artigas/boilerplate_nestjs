@@ -26,5 +26,8 @@ CREATE TABLE "Product" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Company_cnpj_key" ON "Company"("cnpj");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Product_name_companyId_key" ON "Product"("name", "companyId");
+
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
