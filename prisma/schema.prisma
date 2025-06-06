@@ -13,3 +13,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Empresa {
+  id        String    @id @default(uuid())
+  nome      String
+  cnpj      String    @unique
+  endereco  String
+  produtos  Produto[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Produto {
+  id         String   @id @default(uuid())
+  nome       String
+  descricao  String
+  preco      Float
+  empresaId  String
+  empresa    Empresa  @relation(fields: [empresaId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
