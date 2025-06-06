@@ -1,0 +1,310 @@
+type: collection.insomnia.rest/5.0
+name: crud-nestjs
+meta:
+  id: wrk_afbb0f1492da491db5210f73ec1aff0e
+  created: 1749157631145
+  modified: 1749157631145
+collection:
+  - name: User
+    meta:
+      id: fld_1d6efa35f79b43e2a0ccb53627187f91
+      created: 1749226392759
+      modified: 1749226392759
+      sortKey: -1749226392759
+    children:
+      - url: localhost:3000/users
+        name: Create User
+        meta:
+          id: req_a76aff3d8ff642939c54b6234c453116
+          created: 1749157639621
+          modified: 1749226424691
+          isPrivate: false
+          sortKey: -1749226416007
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"email": "jhondoe@email",
+            		"name": "Jhon Doe",
+            		"password": "jhondoepassword"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/users/
+        name: Get User
+        meta:
+          id: req_95131b7cf7e3405ba79c72693af586de
+          created: 1749214699285
+          modified: 1749226462211
+          isPrivate: false
+          sortKey: -1749226415982
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		
+            		"email": "jhondoe@email",
+            		"name": "Jhon Doe"
+            		
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/users/cmbl0bhtj0002fgtc3zf3wxu1
+        name: Update User by ID
+        meta:
+          id: req_439448c9a58247febff8cba2897eeb06
+          created: 1749226309898
+          modified: 1749226579249
+          isPrivate: false
+          sortKey: -1749226415932
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {	
+            		"email": "jhondoe2@email",
+            		"name": "Jhon Doe 2"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/users/cmbl0bhtj0002fgtc3zf3wxu1
+        name: Delete User by ID
+        meta:
+          id: req_60750c6074bf44ecbeb1186b0c67bf41
+          created: 1749226372315
+          modified: 1749226597907
+          isPrivate: false
+          sortKey: -1749226416032
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/users/cmbl0bhtj0002fgtc3zf3wxu1
+        name: Get User by ID
+        meta:
+          id: req_718c3bcc898f4e21b7a79df7cc1839f4
+          created: 1749226465647
+          modified: 1749226562995
+          isPrivate: false
+          sortKey: -1749226415957
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Fruits
+    meta:
+      id: fld_faeb51ad87ff496a9a49d88c3a6d8f77
+      created: 1749226403406
+      modified: 1749226403406
+      sortKey: -1749226403406
+    children:
+      - url: localhost:3000/fruits
+        name: Create Fruit
+        meta:
+          id: req_4609d78f018b4753afbf0ec148fe55b9
+          created: 1749215665849
+          modified: 1749226443160
+          isPrivate: false
+          sortKey: -1749226428535
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "name": "Banana",
+              "description": "Banana nanica, rica em potássio",
+              "price": 2.99,
+              "authorId": "cmbjwkujl0001fg2kz5hwqmg5"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/fruits/
+        name: Get Fruit
+        meta:
+          id: req_f5e5540550754bf1a2ee6a72a987793f
+          created: 1749215770374
+          modified: 1749226814093
+          isPrivate: false
+          sortKey: -1749226428435
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	
+            	"name": "Bafadsfasdgfagdfgnana",
+            	"description": "Bsfasdggadfgtássio",
+            	"price": 2.9219,
+            	"authorId": "cmbkz7zgi0000fgwgdrdj2wvv"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/fruits/cmbl0g8mh0005fgtci0tv4e1q
+        name: Get Fruit by ID
+        meta:
+          id: req_ea240e67c8984b779d31dfdd0d302df9
+          created: 1749226494537
+          modified: 1749226839711
+          isPrivate: false
+          sortKey: -1749226422233.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	
+            	"name": "Bafadsfasdgfagdfgnana",
+            	"description": "Bsfasdggadfgtássio",
+            	"price": 2.9219,
+            	"authorId": "cmbkz7zgi0000fgwgdrdj2wvv"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/fruits/cmbl0g8mh0005fgtci0tv4e1q
+        name: Update Fruit
+        meta:
+          id: req_77e98719f02844eda85695853826e9b4
+          created: 1749226504846
+          modified: 1749226797907
+          isPrivate: false
+          sortKey: -1749226428485
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "name": "Banana",
+              "description": "Banana nanica, não é nanica",
+              "price": 2.99,
+              "authorId": "cmbjwkujl0001fg2kz5hwqmg5"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/fruits/cmbl0g8mh0005fgtci0tv4e1q
+        name: Delete Fruit
+        meta:
+          id: req_b4ab2051712a4eb395c7c73718e6a683
+          created: 1749226518067
+          modified: 1749226843646
+          isPrivate: false
+          sortKey: -1749226428635
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_579ceae165b1c001e4e7cf3e9372354e5ec335db
+    created: 1749157631149
+    modified: 1749157631149
+environments:
+  name: Base Environment
+  meta:
+    id: env_579ceae165b1c001e4e7cf3e9372354e5ec335db
+    created: 1749157631147
+    modified: 1749157631147
+    isPrivate: false
