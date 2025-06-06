@@ -24,7 +24,7 @@ export const productController = {
 		}
 	},
 
-	// POST /companies/create
+	// POST /products/create
 	create: async (req: Request, res: Response) => {
 		const parseResult = createProductSchema.safeParse(req.body);
 
@@ -52,7 +52,7 @@ export const productController = {
 		}
 	},
 
-	// DELETE /product/:id
+	// DELETE /products/:id
 	delete: async (req: Request, res: Response) => {
 		const { id } = req.params;
 
@@ -61,8 +61,8 @@ export const productController = {
 		}
 
 		try {
-			const companyDeleted = await productService.deleteProduct(id);
-			if (!companyDeleted) {
+			const productDeleted = await productService.deleteProduct(id);
+			if (!productDeleted) {
 				return res.status(404).json({ message: "Product not found." });
 			}
 

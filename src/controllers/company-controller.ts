@@ -69,7 +69,7 @@ export const companyController = {
 		}
 	},
 
-	// PUT /courses/:id
+	// PUT /companies/:id
 	update: async (req: Request, res: Response) => {
 		const { id } = req.params;
 
@@ -119,6 +119,23 @@ export const companyController = {
 			});
 		} catch (error) {
 			console.error("Error listing companies:", error);
+			return res.status(500).json({ message: "Internal server error." });
+		}
+	},
+
+	// GET /companies/search?name=
+	findByName: async (req: Request, res: Response) => {
+		const { name } = req.query;
+
+		if (!name || typeof name !== "string") {
+			return res.status(400).json({ message: "Name query param is required." });
+		}
+
+		try {
+			const companies = await companyService.findByName(name);
+			return res.status(200).json(companies);
+		} catch (error) {
+			console.error("Error:", error);
 			return res.status(500).json({ message: "Internal server error." });
 		}
 	},

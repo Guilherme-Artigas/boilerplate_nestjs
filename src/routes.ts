@@ -4,6 +4,7 @@ import { productController } from './controllers/product-controller'
 
 const router = express.Router()
 
+router.get('/companies/search', companyController.findByName)
 router.get('/companies', companyController.listAll)
 router.get('/companies/:id', companyController.showOne)
 router.post('/companies/create', companyController.create)

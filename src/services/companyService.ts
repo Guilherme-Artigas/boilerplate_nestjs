@@ -82,5 +82,26 @@ export const companyService = {
 
   countAll: async () => {
     return await prisma.company.count();
-  }
+  },
+
+  findByName: async (name: string) => {
+		try {
+			const companies = await prisma.company.findMany({
+				where: {
+					name: {
+						contains: name,
+						mode: "insensitive",
+					},
+				},
+				include: {
+					products: true,
+				},
+			});
+
+			return companies;
+		} catch (error) {
+			console.error("Error finding companies by name.", error);
+			throw new Error("Error finding companies by name.");
+		}
+	},
 }
