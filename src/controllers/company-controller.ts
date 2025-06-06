@@ -3,7 +3,7 @@ import { companyService } from "../services/companyService"
 import { createCompanySchema } from "../schemas/company-schema"
 
 export const companyController = {
-  //GET /companies/:id
+  // GET /companies/:id
   showOne: async (req: Request, res: Response) => {
     const { id } = req.params
 
@@ -40,7 +40,31 @@ export const companyController = {
       const company = await companyService.createCompany(data)
       return res.status(201).json(company)
     } catch (error: any) {
+      if (error.code === 'P2002') {
+        return res.status(409).json({ message: "CNPJ already exists." })
+      }
       console.error("Error creating company:", error)
+      return res.status(500).json({ message: "Internal server error." })
+    }
+  },
+
+  // DELETE /companies/:id
+  delete: async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    if (!id || typeof id !== 'string') {
+      return res.status(400).json({ message: "Invalid company ID." });
+    }
+
+    try {
+      const companyDeleted = await companyService.deleteCompany(id)
+      if (!companyDeleted) {
+        return res.status(404).json({ message: "Company not found." })
+      }
+
+      return res.status(204).send()
+    } catch (error) {
+      console.error("Error: ", error)
       return res.status(500).json({ message: "Internal server error." })
     }
   }

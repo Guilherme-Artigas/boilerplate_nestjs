@@ -11,10 +11,6 @@ export const companyService = {
         },  
       })
 
-      if (!company) {
-        throw new Error('Company not found')
-      }
-
       return company
     } catch (error) {
       console.error('Error finding company by id.', error)
@@ -34,6 +30,24 @@ export const companyService = {
       } else {
         console.error('Error creating company.', error)
       }
+      throw error
+    }
+  },
+
+  deleteCompany: async (id: string) => {
+    try {
+      const company = await prisma.company.findUnique({ where: { id } })
+      if (!company) {
+        return null
+      }
+      const deletedCompany = await prisma.company.delete({
+        where: {
+          id: id
+        }
+      })
+      return deletedCompany
+    } catch (error) {
+      console.error('Error deleting company.', error)
       throw error
     }
   }
