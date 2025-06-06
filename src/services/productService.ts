@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { productImput } from "../models/Product";
 import { prisma } from "../prisma/client";
 
@@ -24,58 +25,76 @@ export const productService = {
 			});
 			return newproduct;
 		} catch (error: any) {
-      console.error("Error creating product.", error)
-			throw error
+			if (error instanceof Prisma.PrismaClientKnownRequestError) {
+				if (error.code === "P2002") {
+					throw new Error("This company already has a product with this name.");
+				}
+				if (error.code === "P2003") {
+					throw new Error("Company does not exist.");
+				}
+			}
+
+			console.error("Error creating product:", error);
+			throw new Error("Error creating product.");
 		}
 	},
 
-  deleteProduct: async (id: string) => {
-    try {
-      const product = await prisma.product.findUnique({ where: { id } })
-      if (!product) {
-        return null
-      }
-      const deletedProduct = await prisma.product.delete({
-        where: {
-          id: id
-        }
-      })
-      return deletedProduct
-    } catch (error) {
-      console.error('Error deleting product.', error)
-      throw error
-    }
-  },
+	deleteProduct: async (id: string) => {
+		try {
+			const product = await prisma.product.findUnique({ where: { id } });
+			if (!product) {
+				return null;
+			}
+			const deletedProduct = await prisma.product.delete({
+				where: {
+					id: id,
+				},
+			});
+			return deletedProduct;
+		} catch (error) {
+			console.error("Error deleting product.", error);
+			throw error;
+		}
+	},
 
-  updateProduct: async (id: string, data: Partial<{ name: string; description: string; price: number }>) => {
-    try {
-      const product = await prisma.product.findUnique({ where: { id } })
-      if (!product) {
-        return null
-      }
-      const updatedProduct = await prisma.product.update({
-        where: { id },
-        data
-      })
-      return updatedProduct
-    } catch (error) {
-      console.error("Error updating product.", error)
-      throw error
-    }
-  },
+	updateProduct: async (id: string, data: Partial<{ name: string; description: string; price: number }>) => {
+		try {
+			const product = await prisma.product.findUnique({ where: { id } });
+			if (!product) {
+				return null;
+			}
+			const updatedProduct = await prisma.product.update({
+				where: { id },
+				data,
+			});
+			return updatedProduct;
+		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError) {
+				if (error.code === "P2002") {
+					throw new Error("This company already has a product with this name.");
+				}
+				if (error.code === "P2003") {
+					throw new Error("Company does not exist.");
+				}
+			}
 
-  listPaginated: async (skip: number, take: number) => {
-    return await prisma.product.findMany({
-      skip,
-      take,
-      orderBy: { name: 'asc' },
-      include: {
-        company: true
-      }
-    });
-  },
+			console.error("Error updating product:", error);
+			throw new Error("Error updating product.");
+		}
+	},
 
-  countAll: async () => {
-    return await prisma.product.count();
-  }
-}
+	listPaginated: async (skip: number, take: number) => {
+		return await prisma.product.findMany({
+			skip,
+			take,
+			orderBy: { name: "asc" },
+			include: {
+				company: true,
+			},
+		});
+	},
+
+	countAll: async () => {
+		return await prisma.product.count();
+	},
+};
