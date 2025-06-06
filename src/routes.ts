@@ -11,5 +11,6 @@ router.delete('/companies/:id', companyController.delete)
 
 router.get('/products/:id', productController.showOne)
 router.post('/products/create', productController.create)
+router.delete('/products/:id', productController.delete)
 
 export { router }

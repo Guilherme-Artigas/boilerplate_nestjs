@@ -19,13 +19,31 @@ export const productService = {
 
 	createProduct: async (data: productImput) => {
 		try {
-			const newCompany = await prisma.product.create({
+			const newproduct = await prisma.product.create({
 				data,
 			});
-			return newCompany;
+			return newproduct;
 		} catch (error: any) {
-      console.error("Error creating company.", error)
+      console.error("Error creating product.", error)
 			throw error
 		}
 	},
+
+  deleteProduct: async (id: string) => {
+    try {
+      const product = await prisma.product.findUnique({ where: { id } })
+      if (!product) {
+        return null
+      }
+      const deletedProduct = await prisma.product.delete({
+        where: {
+          id: id
+        }
+      })
+      return deletedProduct
+    } catch (error) {
+      console.error('Error deleting product.', error)
+      throw error
+    }
+  },
 }
