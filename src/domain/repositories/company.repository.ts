@@ -1,4 +1,4 @@
-import { Company } from './entities/company';
+import { Company } from '../entities/company';
 
 export abstract class CompanyRepository {
   abstract findAll(): Promise<Company[]>;
