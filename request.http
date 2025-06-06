@@ -1,0 +1,110 @@
+@baseUrl = http://localhost:4000
+### Criar um novo gerente
+// @name createManager
+POST http://localhost:4000/manager
+Content-Type: application/json
+
+{
+  "name": "Carlo Ancelloti",
+  "email": "carlao.ancelloti@example.com",
+  "phone": "11988887777",
+  "cpf": "12345678909"
+}
+
+###
+
+@managerId = {{createManager.response.body.$.id}}
+
+### Criar uma nova empresa
+// @name createCompany
+POST {{baseUrl}}/company
+Content-Type: application/json
+
+{
+  "name": "Empresa Exemplo",
+  "cnpj": "12345678000100",
+  "managerId": "{{managerId}}"
+}
+###
+
+@companyId = {{createCompany.response.body.id}}
+
+### Buscar uma empresa por ID
+GET  {{baseUrl}}/company/{{companyId}}
+
+### Listar todas as empresas
+GET  {{baseUrl}}/company
+
+### Atualizar uma empresa
+PATCH   {{baseUrl}}/company/{{companyId}}
+Content-Type: application/json
+
+{
+  "name": "Empresa Atualizada",
+  "cnpj": "98765432000100",
+  "manager": {
+    "name": "Maria Oliveira",
+    "email": "maria.oliveira@example.com",
+    "phone": "11988888888",
+    "cpf": "98765432100"
+  }
+}
+
+### Deletar uma empresa
+DELETE  {{baseUrl}}/company/{{companyId}}
+
+---
+
+### Criar um novo produto
+// @name CreateProduct
+POST  {{baseUrl}}/product
+Content-Type: application/json
+
+{
+  "name": "Produto Exemplo",
+  "price": 100.50,
+  "description": "Descrição do produto",
+  "companyId": "{{companyId}}"
+}
+
+###
+@productId = {{CreateProduct.response.body.id}}
+### Buscar um produto por ID
+GET  {{baseUrl}}/product/{{productId}}
+
+### Listar todos os produtos
+GET  {{baseUrl}}/product
+
+### Atualizar um produto
+PUT  {{baseUrl}}/product/{{productId}}
+Content-Type: application/json
+
+{
+  "name": "Produto Atualizado",
+  "price": 150.75,
+  "description": "Descrição atualizada",
+  "companyId": "{{companyId}}"
+}
+
+### Deletar um produto
+DELETE  {{baseUrl}}/products/{{productId}}
+
+### Buscar um gerente por ID
+GET  {{baseUrl}}/manager/{{managerId}}
+
+### Listar todos os gerentes
+GET  {{baseUrl}}/manager
+
+### Atualizar um gerente
+PATCH  {{baseUrl}}/manager/{{managerId}}
+Content-Type: application/json
+
+{
+  "name": "Carlo Ancelloti Atualizado",
+  "email": "carlo.ancelloti.atualizado@example.com",
+  "phone": "11999998888",
+  "cpf": "12345678909"
+}
+
+### Deletar um gerente
+DELETE  {{baseUrl}}/manager/{{managerId}}

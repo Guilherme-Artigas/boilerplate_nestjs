@@ -1,0 +1,42 @@
+services:
+  postgres:
+    container_name: postgres_cros
+    image: postgres:16
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-crosDB}"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - backend-net
+  backend:
+    build: 
+      context: .  
+      dockerfile: Dockerfile
+    container_name: backend_cros
+    restart: always
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - 4000:4000
+    volumes:
+      - ./:/app
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
