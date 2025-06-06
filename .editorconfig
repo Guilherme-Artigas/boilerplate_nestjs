@@ -1,0 +1,30 @@
+# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+# More information at http://editorconfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# 4 space indentation for source code files
+[*.{ts,js,html,css,scss,json,md}]
+indent_style = space
+indent_size = 4
+
+# Specific settings for JSON files
+[*.json]
+indent_style = space
+indent_size = 4
+
+# Makefile should use tabs for indentation
+[Makefile]
+indent_style = tab
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false

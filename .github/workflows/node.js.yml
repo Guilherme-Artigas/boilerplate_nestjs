@@ -1,0 +1,53 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Boilerplate NestJS CI
+
+# {1} Configuração dos gatilhos do workflow
+on:
+    push:
+        branches: ['main'] # Executa o workflow em pushs para a branch "main"
+    pull_request:
+        branches: ['main'] # Executa o workflow em pull requests para a branch "main"
+
+jobs:
+    build:
+        runs-on: ubuntu-latest # O job será executado em um ambiente Ubuntu mais recente
+
+        strategy:
+            matrix:
+                node-version: [18.x, 20.x, 22.x] # Executa o job em múltiplas versões do Node.js
+                # Veja a programação de lançamentos suportados do Node.js em https://nodejs.org/en/about/releases/
+
+        steps:
+            # {2} Checkout do código-fonte
+            - name: Checkout the source code
+              uses: actions/checkout@v4 # Utiliza a ação de checkout do GitHub para obter o código-fonte
+
+            # {3} Configuração do Node.js
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }} # Usa a versão do Node.js definida na matriz
+                  cache: 'npm' # Armazena em cache as dependências npm
+                  cache-dependency-path: package-lock.json # Baseia o cache no arquivo package-lock.json
+
+            # {4} Instalação de dependências
+            - name: Install dependencies
+              run: npm ci # Instala as dependências do projeto utilizando 'npm ci' para uma instalação limpa
+
+            # {5} Formata o código
+            - name: Format
+              run: npm run format
+
+            # {6} Regras de lint
+            - name: Regras de lint
+              run: npm run lint
+
+            # {7} Test
+            - name: Test
+              run: npm run test
+
+            # {8} Build do projeto
+            - name: Build
+              run: npm run build # Constrói o projeto com o script 'build'
