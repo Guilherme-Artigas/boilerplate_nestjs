@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { companyService } from "../services/companyService"
 
 export const companyController = {
-  //GET /company/:id
+  //GET /companies/:id
   showOne: async (req: Request, res: Response) => {
     const { companyId } = req.params
 
