@@ -67,5 +67,17 @@ export const companyService = {
       console.error("Error updating company.", error)
       throw error
     }
+  },
+
+  listPaginated: async (skip: number, take: number) => {
+    return await prisma.company.findMany({
+      skip,
+      take,
+      orderBy: { name: 'asc' },
+    });
+  },
+
+  countAll: async () => {
+    return await prisma.company.count();
   }
 }
