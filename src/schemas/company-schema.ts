@@ -7,3 +7,8 @@ export const createCompanySchema = z.object({
 })
 
 export type CreateCompanyInput = z.infer<typeof createCompanySchema>
+
+export const updateCompanySchema = z.object({
+  name: z.string().optional(),
+  adress: z.string().optional(),
+})

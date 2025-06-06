@@ -50,5 +50,18 @@ export const companyService = {
       console.error('Error deleting company.', error)
       throw error
     }
+  },
+
+  updateCompany: async (id: string, data: Partial<{ name: string; adress: string }>) => {
+    try {
+      const updatedCompany = await prisma.company.update({
+        where: { id },
+        data
+      })
+      return updatedCompany
+    } catch (error) {
+      console.error("Error updating company.", error)
+      throw error
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { companyService } from "../services/companyService"
-import { createCompanySchema } from "../schemas/company-schema"
+import { createCompanySchema, updateCompanySchema } from "../schemas/company-schema"
 
 export const companyController = {
   // GET /companies/:id
@@ -65,6 +65,37 @@ export const companyController = {
       return res.status(204).send()
     } catch (error) {
       console.error("Error: ", error)
+      return res.status(500).json({ message: "Internal server error." })
+    }
+  },
+
+  // PUT /courses/:id
+  update: async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    if (!id || typeof id !== "string") {
+      return res.status(400).json({ message: "Invalid company ID." })
+    }
+
+    const parseResult = updateCompanySchema.safeParse(req.body)
+
+    if (!parseResult.success) {
+      return res.status(400).json({
+        message: "Validation error",
+        errors: parseResult.error.errors,
+      })
+    }
+
+    const updatedData = parseResult.data
+
+    try {
+      const updatedCompany = await companyService.updateCompany(id, updatedData)
+      if (!updatedCompany) {
+        return res.status(404).json({ message: "Company not found." })
+      }
+      return res.status(200).json(updatedCompany)
+    } catch (error) {
+      console.error("Error updating company:", error)
       return res.status(500).json({ message: "Internal server error." })
     }
   }
