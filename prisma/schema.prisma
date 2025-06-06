@@ -18,7 +18,7 @@ model Company {
   name      String
   cnpj      String    @unique
   adress    String
-  products  Product[]
+  products  Product[] 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -29,7 +29,7 @@ model Product {
   description String
   price       Float
   companyId   String
-  company     Company  @relation(fields: [companyId], references: [id])
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

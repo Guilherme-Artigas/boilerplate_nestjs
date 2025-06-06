@@ -1,19 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Empresa` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Produto` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Produto" DROP CONSTRAINT "Produto_empresaId_fkey";
-
--- DropTable
-DROP TABLE "Empresa";
-
--- DropTable
-DROP TABLE "Produto";
-
 -- CreateTable
 CREATE TABLE "Company" (
     "id" TEXT NOT NULL,
@@ -43,4 +27,4 @@ CREATE TABLE "Product" (
 CREATE UNIQUE INDEX "Company_cnpj_key" ON "Company"("cnpj");
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
