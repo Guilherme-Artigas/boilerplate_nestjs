@@ -6,3 +6,9 @@ export const createProductSchema = z.object({
   price: z.number().positive(),
   companyId: z.string().uuid(),
 })
+
+export const updateProductSchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+  price: z.number().positive().optional(),
+})

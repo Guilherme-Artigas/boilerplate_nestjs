@@ -54,6 +54,10 @@ export const companyService = {
 
   updateCompany: async (id: string, data: Partial<{ name: string; adress: string }>) => {
     try {
+      const company = await prisma.company.findUnique({ where: { id } })
+      if (!company) {
+        return null
+      }
       const updatedCompany = await prisma.company.update({
         where: { id },
         data

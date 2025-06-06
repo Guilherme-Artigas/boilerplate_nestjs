@@ -46,4 +46,21 @@ export const productService = {
       throw error
     }
   },
+
+  updateProduct: async (id: string, data: Partial<{ name: string; description: string; price: number }>) => {
+    try {
+      const product = await prisma.product.findUnique({ where: { id } })
+      if (!product) {
+        return null
+      }
+      const updatedProduct = await prisma.product.update({
+        where: { id },
+        data
+      })
+      return updatedProduct
+    } catch (error) {
+      console.error("Error updating product.", error)
+      throw error
+    }
+  }
 }

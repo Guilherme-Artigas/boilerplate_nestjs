@@ -66,5 +66,34 @@ export const productController = {
 		}
 	},
 
-	
+	// PUT /products/:id
+	update: async (req: Request, res: Response) => {
+		const { id } = req.params;
+
+		if (!id || typeof id !== "string") {
+			return res.status(400).json({ message: "Invalid product ID." });
+		}
+
+		const parseResult = updateProductSchema.safeParse(req.body);
+
+		if (!parseResult.success) {
+			return res.status(400).json({
+				message: "Validation error",
+				errors: parseResult.error.errors,
+			});
+		}
+
+		const updatedData = parseResult.data;
+
+		try {
+			const updatedProduct = await productService.updateProduct(id, updatedData);
+			if (!updatedProduct) {
+				return res.status(404).json({ message: "Product not found." });
+			}
+			return res.status(200).json(updatedProduct);
+		} catch (error) {
+			console.error("Error updating product:", error);
+			return res.status(500).json({ message: "Internal server error." });
+		}
+	},
 };
