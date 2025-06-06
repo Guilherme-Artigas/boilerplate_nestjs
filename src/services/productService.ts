@@ -97,4 +97,25 @@ export const productService = {
 	countAll: async () => {
 		return await prisma.product.count();
 	},
+
+	findByName: async (name: string) => {
+		try {
+			const products = await prisma.product.findMany({
+				where: {
+					name: {
+						contains: name,
+						mode: "insensitive",
+					},
+				},
+				include: {
+					company: true,
+				},
+			});
+
+			return products;
+		} catch (error) {
+			console.error("Error finding products by name.", error);
+			throw new Error("Error finding products by name.");
+		}
+	},
 };

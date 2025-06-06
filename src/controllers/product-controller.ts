@@ -133,4 +133,21 @@ export const productController = {
 			return res.status(500).json({ message: "Internal server error." });
 		}
 	},
+
+  // GET /products/search?name=
+	findByName: async (req: Request, res: Response) => {
+		const { name } = req.query;
+
+		if (!name || typeof name !== "string") {
+			return res.status(400).json({ message: "Name query param is required." });
+		}
+
+		try {
+			const products = await productService.findByName(name);
+			return res.status(200).json(products);
+		} catch (error) {
+			console.error("Error:", error);
+			return res.status(500).json({ message: "Internal server error." });
+		}
+	},
 };
