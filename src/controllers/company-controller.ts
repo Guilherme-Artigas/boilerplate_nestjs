@@ -1,13 +1,18 @@
 import { Request, Response } from "express"
 import { companyService } from "../services/companyService"
+import { createCompanySchema } from "../schemas/company-schema"
 
 export const companyController = {
   //GET /companies/:id
   showOne: async (req: Request, res: Response) => {
-    const { companyId } = req.params
+    const { id } = req.params
+
+    if (!id || typeof id !== 'string') {
+      return res.status(400).json({ message: "Invalid company ID." });
+    }
 
     try {
-      const company = await companyService.findById(Number(companyId))
+      const company = await companyService.findById(id)
       if (!company) {
         return res.status(404).json({ message: "Company not found." })
       }
@@ -18,4 +23,25 @@ export const companyController = {
       return res.status(500).json({ message: "Internal server error." })
     }
   },
+
+  // POST /companies/create
+  create: async (req: Request, res: Response) => {
+    const parseResult = createCompanySchema.safeParse(req.body)
+
+    if (!parseResult.success) {
+      return res.status(400).json({
+        message: "Validation error",
+        errors: parseResult.error.errors,
+      })
+    }
+    const data = parseResult.data
+
+    try {
+      const company = await companyService.createCompany(data)
+      return res.status(201).json(company)
+    } catch (error: any) {
+      console.error("Error creating company:", error)
+      return res.status(500).json({ message: "Internal server error." })
+    }
+  }
 }
