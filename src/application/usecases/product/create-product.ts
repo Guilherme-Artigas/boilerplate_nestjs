@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { Product } from '../../../domain/entities/product';
 import { ProductRepository } from '../../../domain/repositories/product.repository';
 
+@Injectable()
 export class CreateProduct {
   constructor(private readonly productRepository: ProductRepository) {}
 
