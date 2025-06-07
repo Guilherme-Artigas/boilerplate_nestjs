@@ -1,0 +1,15 @@
+import { NotFoundException } from '@nestjs/common';
+import { Product } from '../../domain/entities/product';
+import { ProductRepository } from '../../domain/repositories/product.repository';
+
+export class FindOneProducts {
+  constructor(private readonly productRepository: ProductRepository) {}
+  async execute(id: string): Promise<Product | null> {
+    const product = await this.productRepository.findOne(id);
+
+    if (!product) {
+      throw new NotFoundException(`id: ${id} de produto não encontrado`);
+    }
+    return product;
+  }
+}
