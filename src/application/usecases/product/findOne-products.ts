@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
-import { Product } from '../../domain/entities/product';
-import { ProductRepository } from '../../domain/repositories/product.repository';
+import { Product } from '../../../domain/entities/product';
+import { ProductRepository } from '../../../domain/repositories/product.repository';
 
 export class FindOneProducts {
   constructor(private readonly productRepository: ProductRepository) {}
