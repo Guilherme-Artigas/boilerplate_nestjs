@@ -5,7 +5,7 @@ import { ProductRepository } from '../../../domain/repositories/product.reposito
 @Injectable()
 export class FindOneProducts {
   constructor(private readonly productRepository: ProductRepository) {}
-  async execute(id: string): Promise<Product | null> {
+  async execute(id: string): Promise<Product> {
     const product = await this.productRepository.findOne(id);
 
     if (!product) {
