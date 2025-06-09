@@ -5,7 +5,7 @@ import { ResponsibleRepository } from '../../../domain/repositories/responsible.
 export class DeleteResponsible {
   constructor(private readonly responsibleRepository: ResponsibleRepository) {}
 
-  async execute(id: string): Promise<void | null> {
+  async execute(id: string): Promise<boolean> {
     const responsible = await this.responsibleRepository.delete(id);
     if (!responsible) {
       throw new NotFoundException(

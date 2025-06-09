@@ -5,7 +5,7 @@ import { CompanyRepository } from '../../../domain/repositories/company.reposito
 export class DeleteCompany {
   constructor(private readonly companyRepository: CompanyRepository) {}
 
-  async execute(id: string): Promise<void | null> {
+  async execute(id: string): Promise<boolean> {
     const company = await this.companyRepository.delete(id);
 
     if (!company) {
