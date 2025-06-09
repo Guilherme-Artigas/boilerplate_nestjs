@@ -1,5 +1,5 @@
-import { CreateProductDto } from '../../../application/dtos/create-product.dto';
-import { ProductResponseDto } from '../../../application/dtos/product-response.dto';
+import { CreateProductDto } from '../../../application/dtos/product/create-product.dto';
+import { ProductResponseDto } from '../../../application/dtos/product/product-response.dto';
 import { DeleteProduct } from '../../../application/usecases/product/delete-product';
 import { FindAllProducts } from '../../../application/usecases/product/findAll-product';
 import { FindOneProducts } from '../../../application/usecases/product/findOne-products';

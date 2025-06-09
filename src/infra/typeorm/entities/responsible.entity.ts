@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('responsibles')
 export class ResponsibleEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   id: string;
   @Column()
   name: string;

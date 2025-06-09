@@ -46,11 +46,11 @@ export class ResponsibleTypeormRepository implements ResponsibleRepository {
 
   private toDomain(entity: ResponsibleEntity): Responsible {
     return new Responsible(
-      entity.id,
       entity.name,
       entity.email,
       entity.phone,
       entity.cpf,
+      entity.id,
     );
   }
 }

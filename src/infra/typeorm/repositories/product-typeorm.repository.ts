@@ -48,11 +48,11 @@ export class ProductTypeormRepository implements ProductRepository {
 
   private toDomain(entity: ProductEntity): Product {
     return new Product(
-      entity.id,
       entity.name,
       entity.description,
       entity.price,
       entity.companyId,
+      entity.id,
     );
   }
 }

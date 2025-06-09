@@ -5,17 +5,23 @@ import { CreateCompany } from '../../../../application/usecases/company/create-c
 import { FindAllCompany } from '../../../../application/usecases/company/findAll-company';
 import { CompanyRepository } from '../../../../domain/repositories/company.repository';
 import { CompanyTypeormRepository } from '../../../typeorm/repositories/company-typeorm.repository';
+import { CompanyController } from '../../controllers/company.controller';
+import { FindOneCompany } from '../../../../application/usecases/company/findOne-company';
+import { DeleteCompany } from '../../../../application/usecases/company/delete-company';
+import { ResponsibleModule } from '../responsible/responsible.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CompanyEntity])],
-  controllers: [],
+  imports: [TypeOrmModule.forFeature([CompanyEntity]), ResponsibleModule],
+  controllers: [CompanyController],
   providers: [
-    CreateCompany,
-    FindAllCompany,
     {
       provide: CompanyRepository,
       useClass: CompanyTypeormRepository,
     },
+    CreateCompany,
+    FindAllCompany,
+    FindOneCompany,
+    DeleteCompany,
   ],
 })
 export class CompanyModule {}

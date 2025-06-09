@@ -5,17 +5,23 @@ import { CreateResponsible } from '../../../../application/usecases/responsible/
 import { FindAllResponsible } from '../../../../application/usecases/responsible/findAll-responsible';
 import { ResponsibleRepository } from '../../../../domain/repositories/responsible.repository';
 import { ResponsibleTypeormRepository } from '../../../typeorm/repositories/responsible-typeorm.repository';
+import { ResponsibleController } from '../../controllers/responsible.controller';
+import { FindOneResponsible } from '../../../../application/usecases/responsible/findOne-responsible';
+import { DeleteResponsible } from '../../../../application/usecases/responsible/delete-responsible';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ResponsibleEntity])],
-  controllers: [],
+  controllers: [ResponsibleController],
   providers: [
     CreateResponsible,
     FindAllResponsible,
+    FindOneResponsible,
+    DeleteResponsible,
     {
       provide: ResponsibleRepository,
       useClass: ResponsibleTypeormRepository,
     },
   ],
+  exports: [ResponsibleRepository],
 })
 export class ResponsibleModule {}

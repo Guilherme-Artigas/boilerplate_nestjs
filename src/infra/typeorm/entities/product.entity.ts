@@ -3,7 +3,7 @@ import { CompanyEntity } from './company.entity';
 
 @Entity('products')
 export class ProductEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   id: string;
 
   @Column()
