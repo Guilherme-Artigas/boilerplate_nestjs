@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { IsCnpj } from 'src/common/validators/is-cnpjs';
 
 export class CreateCompanyDto {
   @ApiProperty({
@@ -16,6 +17,7 @@ export class CreateCompanyDto {
   })
   @IsNotEmpty()
   @IsString()
+  @IsCnpj({ message: 'CNPJ inválido' })
   cnpj: string;
 
   @ApiProperty({
