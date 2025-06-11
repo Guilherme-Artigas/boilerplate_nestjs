@@ -45,7 +45,7 @@ export class NoAuthController {
     summary:
       'Rota para verificação do código (somente para mobile, web não precisa consumir essa rota!).',
   })
-  @ApiOkResponse({ status: 200, type: ImessageEntity })
+  @ApiOkResponse({ type: ImessageEntity })
   @ApiBadRequestResponse({ description: 'Requisição inválida' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
   async verifyCode(@Body() body: VerifyCodeDto): Promise<ImessageEntity> {
@@ -58,7 +58,7 @@ export class NoAuthController {
   @Post('no-auth/reset')
   @ApiTags('Sem autenticação')
   @ApiOperation({ summary: 'Rota para redefinir senha.' })
-  @ApiOkResponse({ status: 200, type: ImessageEntity })
+  @ApiOkResponse({ type: ImessageEntity })
   @ApiBadRequestResponse({ description: 'Requisição inválida' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
   async reset(@Body() body: ResetPasswordDto): Promise<ImessageEntity> {
@@ -70,7 +70,7 @@ export class NoAuthController {
   @Post('no-auth/contact-us')
   @ApiTags('Sem autenticação')
   @ApiOperation({ summary: 'Rota para fale conosco.' })
-  @ApiOkResponse({ status: 200, type: ImessageEntity })
+  @ApiOkResponse({ type: ImessageEntity })
   @ApiBadRequestResponse({ description: 'Requisição inválida' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
   async contactUs(@Body() body: NewContactDto): Promise<ImessageEntity> {
@@ -82,7 +82,7 @@ export class NoAuthController {
   @Get('no-auth/texts')
   @ApiTags('Sem autenticação')
   @ApiOperation({ summary: 'Rota para recuperar textos.' })
-  @ApiOkResponse({ status: 200, type: ResponseTextDto })
+  @ApiOkResponse({ type: ResponseTextDto })
   @ApiBadRequestResponse({ description: 'Requisição inválida' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
   texts(@Query() query: TextQueriesDto): Promise<ResponseTextDto> {
@@ -92,7 +92,7 @@ export class NoAuthController {
   @IsPublic()
   @ApiTags('Sem autenticação')
   @ApiOperation({ summary: 'Rota para listar todos os usuários (durante desenvolvimento).' })
-  @ApiOkResponse({ status: 200, type: [ResponseAllUserDto] })
+  @ApiOkResponse({ type: [ResponseAllUserDto] })
   @Get('no-auth/users')
   users() {
     return this.noAuthService.users();
@@ -102,7 +102,7 @@ export class NoAuthController {
   @Get('no-auth/health-check')
   @ApiTags('Sem autenticação')
   @ApiOperation({ summary: 'Rota para verificar status do servidor.' })
-  @ApiOkResponse({ status: 200, description: 'Servidor UP' })
+  @ApiOkResponse({ description: 'Servidor UP' })
   healthCheck() {
     return { message: 'Servidor UP' };
   }
@@ -113,7 +113,7 @@ export class NoAuthController {
     summary: 'Rota para recuperar informações do usuário.',
     security: [{ bearerAuth: [] }],
   })
-  @ApiOkResponse({ status: 200, type: ResponseAllUserDto })
+  @ApiOkResponse({ type: ResponseAllUserDto })
   @ApiBadRequestResponse({ description: 'Requisição inválida' })
   @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
   mySelf(@CurrentUser() user: User) {

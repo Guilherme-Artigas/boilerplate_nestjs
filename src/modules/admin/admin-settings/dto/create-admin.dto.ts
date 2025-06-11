@@ -40,7 +40,7 @@ export class CreateAdminDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({ enum: AdminPermissions, type: [AdminPermissions] })
+  @ApiProperty({ enum: AdminPermissions, enumName: 'AdminPermissions', type: [AdminPermissions] })
   @IsArray()
   @ArrayMinSize(1)
   @ArrayMaxSize(5)
