@@ -1,98 +1,211 @@
+# Company and Product Management API
+
+A RESTful API for managing companies and products built with NestJS, Prisma ORM, and PostgreSQL, following best development practices.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Table of Contents
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [Overview](#overview)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Running the Project](#running-the-project)
+- [API Endpoints](#api-endpoints)
+- [Data Validation](#data-validation)
+- [CORS](#cors)
+- [Tests](#tests)
+- [API Documentation](#api-documentation)
+- [Database Structure](#database-structure)
 
-## Description
+## Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project implements a RESTful API for managing companies and their products. The application allows registration of companies with CNPJ validation and recording products associated with these companies. The system uses PostgreSQL as the database, Prisma ORM for data access, and provides documentation via Swagger UI.
 
-## Project setup
+## Technologies
 
-```bash
-$ npm install
+- **NestJS**: Framework for building efficient and scalable server-side applications
+- **TypeScript**: Main programming language
+- **PostgreSQL**: Relational database
+- **Prisma**: ORM for database access and manipulation
+- **Class Validator**: Input data validation
+- **Swagger**: API documentation
+- **CPF/CNPJ Validator**: Library for validating Brazilian documents
+
+## Project Structure
+
+The application follows a modular architecture, separating responsibilities into distinct modules:
+
+```
+src/
+├── common/                # Shared utilities
+│   ├── decorators/        # Custom decorators
+│   └── validators/        # Custom validators
+├── config/                # Application configurations
+│   ├── app.config.ts      # General configurations
+│   └── cors.config.ts     # CORS configuration
+├── prisma/                # Database access layer
+│   ├── prisma.module.ts   # Prisma module
+│   └── prisma.service.ts  # Prisma service
+├── company/               # Company module
+│   ├── company.controller.ts
+│   ├── company.module.ts
+│   ├── company.service.ts
+│   └── dto/
+│       ├── create-company.dto.ts
+│       └── update-company.dto.ts
+├── product/               # Product module
+│   ├── product.controller.ts
+│   ├── product.module.ts
+│   ├── product.service.ts
+│   └── dto/
+│       ├── create-product.dto.ts
+│       └── update-product.dto.ts
+├── app.module.ts          # Main module
+└── main.ts                # Application entry point
 ```
 
-## Compile and run the project
+## Features
 
-```bash
-# development
-$ npm run start
+- **Company Management**: Complete CRUD for companies with CNPJ validation
+- **Product Management**: Complete CRUD for products with relation to a specific company
+- **Data Validation**: Input validation using class-validator and custom decorators
+- **Documentation**: Complete API documentation via Swagger UI
+- **Configurable CORS**: CORS configuration via environment variables
 
-# watch mode
-$ npm run start:dev
+## Configuration
 
-# production mode
-$ npm run start:prod
+Application settings are managed through environment variables. Create an `.env` file in the project root following the example below:
+
+```env
+# Database connection
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/products_db?schema=public"
+
+# CORS configuration (comma-separated list of allowed origins)
+CORS_ORIGINS="http://localhost:3000,http://localhost:5173,http://localhost:4200"
+
+# Application port
+PORT=3000
 ```
 
-## Run tests
+## Installation
 
 ```bash
-# unit tests
-$ npm run test
+# Install dependencies
+npm install
 
-# e2e tests
-$ npm run test:e2e
+# Generate Prisma client
+npm run prisma:generate
 
-# test coverage
-$ npm run test:cov
+# Apply migrations
+npm run prisma:migrate:dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Running the Project
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
+
+# View database (Prisma Studio)
+npm run prisma:studio
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## API Endpoints
 
-## Resources
+### Companies
 
-Check out a few resources that may come in handy when working with NestJS:
+- `GET /companies` - List all companies
+- `GET /companies/:id` - Get a specific company
+- `POST /companies` - Create a new company
+- `PATCH /companies/:id` - Update a company
+- `DELETE /companies/:id` - Delete a company
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Products
 
-## Support
+- `GET /products` - List all products
+- `GET /products/:id` - Get a specific product
+- `GET /products/company/:id` - List a company's products
+- `POST /products` - Create a new product
+- `PATCH /products/:id` - Update a product
+- `DELETE /products/:id` - Delete a product
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Data Validation
 
-## Stay in touch
+The application implements strict data validation:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **CNPJ**: Format validation and check digit verification
+- **Required Fields**: Verification of required fields like name, price, etc.
+- **Data Types**: Validation of types (strings, numbers, etc.)
 
-## License
+Example of CNPJ validator:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```typescript
+@IsNotEmpty()
+@IsString()
+@IsCnpj({ message: 'Invalid CNPJ' })
+cnpj: string;
+```
+
+## CORS
+
+CORS configuration is managed via the `CORS_ORIGINS` environment variable, which accepts:
+
+- A comma-separated list of origins
+- `*` to allow any origin
+- Combinations of specific origins and wildcards
+
+## Tests
+
+```bash
+# Unit tests
+npm run test
+
+# End-to-end tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## API Documentation
+
+Swagger documentation is available during development at:
+
+```
+http://localhost:3000/api
+```
+
+## Database Structure
+
+### Table: companies
+
+| Column     | Type     | Description                     |
+|------------|----------|---------------------------------|
+| id         | Int      | Primary ID, auto-incremental    |
+| name       | String   | Company name                    |
+| cnpj       | String   | CNPJ, unique                    |
+| address    | String?  | Address (optional)              |
+| created_at | DateTime | Creation date                   |
+| updated_at | DateTime | Update date                     |
+
+### Table: products
+
+| Column      | Type     | Description                      |
+|-------------|----------|----------------------------------|
+| id          | Int      | Primary ID, auto-incremental     |
+| name        | String   | Product name                     |
+| description | String?  | Description (optional)           |
+| price       | Float    | Price                            |
+| stock       | Int      | Quantity in stock                |
+| company_id  | Int      | Company ID (foreign key)         |
+| created_at  | DateTime | Creation date                    |
+| updated_at  | DateTime | Update date                      |
