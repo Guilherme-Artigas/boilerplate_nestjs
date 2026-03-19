@@ -61,7 +61,7 @@ export class UploadController {
   async uploadOneFile(
     @UploadedFile(
       new ParseFilePipeBuilder()
-        .addFileTypeValidator({ fileType: /png|jpg|jpeg|pdf/ })
+        // .addFileTypeValidator({ fileType: /png|jpg|jpeg|pdf/ })
         .addMaxSizeValidator({ maxSize: 8388608 })
         .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
     )
