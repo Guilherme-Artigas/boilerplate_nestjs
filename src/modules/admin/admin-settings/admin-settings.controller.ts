@@ -10,6 +10,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { PrismaService } from '@database/PrismaService';
 import { AdminPermission, User } from '@prisma/client';
 import handleAccessControl from '@utils/HandleAccessControl';
 import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
@@ -26,7 +27,10 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 @ApiTags('Configurações - Portal Gerencial')
 @Controller('admin-settings')
 export class AdminSettingsController {
-  constructor(private readonly _adminSettingsService: AdminSettingsService) {}
+  constructor(
+    private readonly _adminSettingsService: AdminSettingsService,
+    private readonly _prisma: PrismaService,
+  ) {}
 
   @Post()
   @ApiOperation({
@@ -41,7 +45,7 @@ export class AdminSettingsController {
   async create(@CurrentUser() user: User, @Body() payload: CreateAdminDto) {
     handleAccessControl.verifyAdminRole(user);
 
-    await handleAccessControl.verifyPermission(user, 'Settings');
+    await handleAccessControl.verifyPermission(this._prisma, user, 'Settings');
 
     return this._adminSettingsService.create(payload);
   }
@@ -67,7 +71,7 @@ export class AdminSettingsController {
   async findAll(@CurrentUser() user: User, @Query() query: QueryAdminDto) {
     handleAccessControl.verifyAdminRole(user);
 
-    await handleAccessControl.verifyPermission(user, 'Settings');
+    await handleAccessControl.verifyPermission(this._prisma, user, 'Settings');
 
     return this._adminSettingsService.findAll(query);
   }
@@ -84,7 +88,7 @@ export class AdminSettingsController {
   async findById(@CurrentUser() user: User, @Param('id', ParseIntPipe) id: number) {
     handleAccessControl.verifyAdminRole(user);
 
-    await handleAccessControl.verifyPermission(user, 'Settings');
+    await handleAccessControl.verifyPermission(this._prisma, user, 'Settings');
 
     return this._adminSettingsService.findById(id);
   }
@@ -103,7 +107,7 @@ export class AdminSettingsController {
   ) {
     handleAccessControl.verifyAdminRole(user);
 
-    await handleAccessControl.verifyPermission(user, 'Settings');
+    await handleAccessControl.verifyPermission(this._prisma, user, 'Settings');
 
     return this._adminSettingsService.update(id, body);
   }

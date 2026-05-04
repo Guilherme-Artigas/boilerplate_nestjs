@@ -3,8 +3,6 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
 
 class HandleAccessControl {
-  constructor(private readonly prisma: PrismaService) {}
-
   verifyAdminRole(payload: Partial<User>): void {
     const { role } = payload;
 
@@ -13,10 +11,14 @@ class HandleAccessControl {
     }
   }
 
-  async verifyPermission(payload: Partial<User>, permission: string): Promise<void> {
+  async verifyPermission(
+    prisma: PrismaService,
+    payload: Partial<User>,
+    permission: string,
+  ): Promise<void> {
     const { id } = payload;
 
-    const user = await this.prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
       where: { id },
       include: { adminPermissions: true },
     });
@@ -29,4 +31,4 @@ class HandleAccessControl {
   }
 }
 
-export default new HandleAccessControl(new PrismaService());
+export default new HandleAccessControl();

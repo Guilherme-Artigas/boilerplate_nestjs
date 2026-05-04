@@ -20,7 +20,7 @@ export class AdminSettingsService {
   async create(payload: CreateAdminDto): Promise<CreateAdminResponseDto> {
     const { name, document, email, phone, password, adminPermissions, fileUrl, fileKey } = payload;
 
-    await checkExistingUser({ document, email, phone });
+    await checkExistingUser(this._prisma, { document, email, phone });
 
     const validNewAdmin = {
       name: capitalizeFirstLetter(name),
@@ -117,9 +117,9 @@ export class AdminSettingsService {
 
     const { name, document, email, phone, password, status, adminPermissions } = payload;
 
-    await HandleUpdateUser.updateUser(id, payload);
+    await HandleUpdateUser.updateUser(this._prisma, id, payload);
 
-    if (adminPermissions) await HandleUpdatePermission.update(id, adminPermissions);
+    if (adminPermissions) await HandleUpdatePermission.update(this._prisma, id, adminPermissions);
 
     await this._prisma.user.update({
       where: { id },

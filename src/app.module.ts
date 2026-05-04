@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { PrismaModule } from '@database/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { LoginModule } from './modules/login/login.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -21,6 +22,7 @@ import { WebModule } from './modules/web/web.module';
       },
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
+    PrismaModule,
     AuthModule,
     LoginModule,
     UploadModule,

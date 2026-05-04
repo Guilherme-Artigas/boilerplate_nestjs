@@ -1,7 +1,6 @@
 import { ConflictException } from '@nestjs/common';
-import { PrismaClient, User } from '@prisma/client';
-
-const prisma: PrismaClient = new PrismaClient();
+import { PrismaService } from '@database/PrismaService';
+import { User } from '@prisma/client';
 
 /**
  * Verifica a existência de um usuário com base nos dados fornecidos.
@@ -11,7 +10,11 @@ const prisma: PrismaClient = new PrismaClient();
  * @returns Um objeto parcial do usuário encontrado ou null se nenhum usuário corresponder aos dados fornecidos.
  * @throws ConflictException Se um usuário com os dados fornecidos já existir e o parâmetro r for false.
  */
-async function checkExistingUser(payload: Partial<User>, r?: boolean): Promise<Partial<User>> {
+async function checkExistingUser(
+  prisma: PrismaService,
+  payload: Partial<User>,
+  r?: boolean,
+): Promise<Partial<User>> {
   const { id, document, email, phone } = payload;
 
   const user: User | null = await prisma.user.findFirst({
